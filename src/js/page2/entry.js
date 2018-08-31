@@ -1,0 +1,1 @@
+import '@/style/page2/index.scss';

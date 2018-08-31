@@ -1,5 +1,7 @@
 const path = require('path')
-
+const basePath = path.resolve(__dirname, '../', '../')
 module.exports = {
-    basePath: path.resolve(__dirname, '../', '../')
+    basePath,
+    pagesRootPath: path.resolve(basePath, 'src'),
+    distRootPath: path.resolve(basePath, 'dist'),
 }

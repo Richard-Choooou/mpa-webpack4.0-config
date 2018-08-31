@@ -5,8 +5,9 @@
   "main": "src/js/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "cross-env NODE_ENV=product webpack --config  ./build/webpack.pro.js --mode=production ",
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --config  ./build/webpack.dev.js --colors --mode=development "
+    "build": "cross-env NODE_ENV=production webpack --config  ./build/webpack.pro.js --mode=production --colors",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --config  ./build/webpack.dev.js --colors --mode=development --colors",
+    "new": "node build/bin/new.js"
   },
   "repository": {
     "type": "git",
@@ -20,7 +21,13 @@
   },
   "homepage": "https://github.com/Richard-Choooou/travis-ci-test#readme",
   "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "7.1.4",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-runtime": "^6.26.0",
     "clean-webpack-plugin": "^0.1.19",
+    "compression-webpack-plugin": "^1.1.12",
     "cross-env": "^5.2.0",
     "css-loader": "^1.0.0",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
@@ -35,5 +42,9 @@
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.7",
     "webpack-merge": "^4.1.4"
+  },
+  "dependencies": {
+    "jquery": "^3.3.1",
+    "vue": "^2.5.17"
   }
 }
