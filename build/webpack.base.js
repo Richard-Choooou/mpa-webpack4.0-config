@@ -14,7 +14,7 @@ const webpackBaseConfig = {
     output: {
         filename: 'js/[name].[hash].js',
         path: config.distRootPath,
-        publicPath: '/'
+        publicPath: './'
     },
     resolve: {
         alias: {
