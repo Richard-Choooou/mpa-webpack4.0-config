@@ -8,25 +8,25 @@ const config = require('./config')
 
 module.exports = merge(webpackBaseConfig, {
     module: {
-        rules: [{
-            test: /\.(sc|c)ss$/,
-            use: [{loader: 'style-loader'}, {loader: 'css-loader'}, {loader: 'sass-loader'}]
-        }]
+        // rules: [{
+        //     test: /\.(sc|c)ss$/,
+        //     use: [{loader: 'style-loader'}, {loader: 'css-loader'}, {loader: 'sass-loader'}]
+        // }]
     },
     devServer: {
         host: '0.0.0.0',
-        // publicPath: '/',
-        contentBase: config.distRootPath,
-        hot: true,
+        publicPath: '/',
+        contentBase: './',
+        hot: false
     },
 
     plugins: [
-        // new webpackCleanPlugin(
-        //     ['./dist'], {
-        //         root: config.basePath,
-        //         allowExternal: true
-        //     }
-        // ),
+        new webpackCleanPlugin(
+            ['../dist'], {
+                root: config.basePath,
+                allowExternal: true
+            }
+        ),
         new webpack.HotModuleReplacementPlugin()
     ]
 })

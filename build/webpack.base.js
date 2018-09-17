@@ -1,5 +1,7 @@
 const path = require('path')
 const htmlWebpackPlugin = require('html-webpack-plugin')
+const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+const miniCssExtractPlugin = require('mini-css-extract-plugin')
 const config  = require('./config')
 const ENV = process.env.NODE_ENV
 const resolveEntryFile = require('./utils').resolveEntryFile
@@ -10,8 +12,9 @@ const jsEntrys = resolveEntryFile('js')
 const webpackBaseConfig = {
     entry: getEntrysPath(jsEntrys),
     output: {
-        filename: 'js/index.[name].[hash].js',
-        publicPath: config.distRootPath
+        filename: 'js/[name].[hash].js',
+        path: config.distRootPath,
+        publicPath: '/'
     },
     resolve: {
         alias: {
@@ -25,6 +28,11 @@ const webpackBaseConfig = {
             use: {
                 loader: 'babel-loader'
             }
+        }, {
+            test: /\.scss$/,
+            use: [{
+                loader: miniCssExtractPlugin.loader,
+            }, {loader: 'css-loader'}, {loader: 'sass-loader'}]
         }, {
             test: /\.html$/,
             use: [{loader: 'html-loader'}]
@@ -42,11 +50,12 @@ const webpackBaseConfig = {
     optimization: {
         splitChunks: {
             chunks: 'all',
-            filename: 'js/commons.[hash].js'
+            name: 'commons',
+            filename: 'js/[name].[hash].js'
         }
     },
     plugins: [
-
+        new ProgressBarPlugin(),
     ]
 }
 
@@ -58,9 +67,20 @@ for(let i in htmlEntry) {
             template: htmlEntry[i].path,
             filename: path.resolve(config.distRootPath, `${htmlEntry[i].dir}.html`),
             inject: 'body',
-            chunks: ['common', htmlEntry[i].dir],
+            chunks: ['commons', htmlEntry[i].dir],
         })
     )
 }
+
+const styleEntryList = resolveEntryFile('scss')
+
+for(let i in styleEntryList) {
+    webpackBaseConfig.plugins.push(
+        new miniCssExtractPlugin({
+            filename: 'css/[name].[hash].css'
+        }),
+    )
+}
+
 
 module.exports = webpackBaseConfig

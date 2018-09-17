@@ -38,7 +38,7 @@ const pageFiles = [{
 }, {
     name: 'index.scss',
     type: 'style',
-    content: `.${pageName}-content {
+    content: `.${pageName}-container {
     
 }`,
     path: path.join(pagefilesPath, 'style', pageName)

@@ -9,20 +9,6 @@ const resolveEntryFile = require('./utils').resolveEntryFile
 
 
 const webpackProductionConfig = merge(webpackBaseConfig, {
-    module: {
-        rules: [
-            {
-                test: /\.scss$/,
-                use: [{
-                    loader: miniCssExtractPlugin.loader,
-                    options: {
-                        // publicPath: '../../'
-                    }
-                }, {loader: 'css-loader'}, {loader: 'sass-loader'}]
-            }
-        ]
-    },
-
     plugins: [
         new webpackCleanPlugin(
             ['../dist'], {
@@ -38,15 +24,5 @@ const webpackProductionConfig = merge(webpackBaseConfig, {
         })
     ]
 })
-
-const styleEntryList = resolveEntryFile('scss')
-
-for(let i in styleEntryList) {
-    webpackProductionConfig.plugins.push(
-        new miniCssExtractPlugin({
-            filename: './css/[name].[hash].css'
-        }),
-    )
-}
 
 module.exports = webpackProductionConfig
