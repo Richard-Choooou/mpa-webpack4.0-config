@@ -21,11 +21,10 @@
   },
   "homepage": "https://github.com/Richard-Choooou/travis-ci-test#readme",
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-loader": "7.1.4",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-runtime": "^6.26.0",
+    "@babel/core": "^7.1.2",
+    "@babel/plugin-transform-runtime": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
+    "babel-loader": "^8.0.4",
     "clean-webpack-plugin": "^0.1.19",
     "compression-webpack-plugin": "^1.1.12",
     "cross-env": "^5.2.0",
@@ -47,6 +46,7 @@
     "webpack-merge": "^4.1.4"
   },
   "dependencies": {
+    "@babel/runtime": "^7.1.2",
     "jquery": "^3.3.1",
     "vue": "^2.5.17"
   },
