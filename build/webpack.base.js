@@ -45,6 +45,15 @@ const webpackBaseConfig = {
                     outputPath: './images'
                 }
             }]
+        }, {
+            test: /\.(woff|svg|eot|ttf)$/,
+            use: [{
+                loader: 'file-loader',
+                options: {
+                    name: ENV == '[name].[ext]',
+                    outputPath: './fonts'
+                }
+            }]
         }]
     },
     optimization: {
