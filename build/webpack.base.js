@@ -50,7 +50,7 @@ const webpackBaseConfig = {
             use: [{
                 loader: 'file-loader',
                 options: {
-                    name: ENV == '[name].[ext]',
+                    name: '[name].[ext]',
                     outputPath: './fonts'
                 }
             }]
