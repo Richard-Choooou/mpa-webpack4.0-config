@@ -1,5 +1,7 @@
 const fs = require('fs')
 const path = require('path')
+const fsExtra = require('fs-extra')
+const fileSave = require('file-save')
 const config = require('../config')
 
 const pageName = process.argv[2]
@@ -7,6 +9,7 @@ const pageCnName = process.argv[3] || pageName
 const pagefilesPath = config.pagesRootPath
 
 initDirs()
+
 let pagesDir = fs.readdirSync(config.pagesRootPath)
 
 if(pagesDir.some(files => files == pageName + '.html')) {
@@ -46,14 +49,7 @@ const pageFiles = [{
 
 pageFiles.forEach(value => {
     let dir = ''
-
-    try {
-        fs.accessSync(value.path)
-    } catch(e) {
-        fs.mkdirSync(value.path)
-    }
-    
-
+    fsExtra.ensureDirSync(value.path) 
     fs.writeFileSync(path.resolve(value.path, value.name), value.content)
 })
 
@@ -62,27 +58,11 @@ console.log('创建成功')
 process.exit()
 
 function initDirs() {
-    try {
-        fs.accessSync(path.resolve(config.basePath, 'src'))
-    } catch(e) {
-        fs.mkdirSync(path.resolve(config.basePath, 'src'))
-    }
+    const dirs = [
+        'src', 'src/js/', 'src/style/'
+    ]
 
-    try {
-        fs.accessSync(path.resolve(config.basePath, 'src', 'js'))
-    } catch(e) {
-        fs.mkdirSync(path.resolve(config.basePath, 'src', 'js'))
-    }
-
-    try {
-        fs.accessSync(path.resolve(config.basePath, 'src', 'style'))
-    } catch(e) {
-        fs.mkdirSync(path.resolve(config.basePath, 'src', 'style'))
-    }
-
-    // try {
-    //     fs.accessSync(config.pagesRootPath)
-    // } catch(e) {
-    //     fs.mkdirSync(config.pagesRootPath)
-    // }
+    dirs.forEach(dir => {
+       fsExtra.ensureDirSync(path.resolve(config.basePath, dir)) 
+    })
 }

@@ -1,0 +1,1 @@
+import '@/style/page4/index.scss';

@@ -82,5 +82,7 @@ for(let i in styleEntryList) {
     )
 }
 
+// console.log(webpackBaseConfig.entry)
+
 
 module.exports = webpackBaseConfig
