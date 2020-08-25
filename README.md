@@ -4,9 +4,10 @@
 ## 功能
 
 集成以下功能
+* vue
+* typescript
 * babel es6 转码 es5
 * sass 转码 css
-* 编译添加gzip文件
 * 文件热更新
 * 页面文件命令生成
 * 抽离公共依赖

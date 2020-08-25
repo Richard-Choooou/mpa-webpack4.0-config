@@ -6,11 +6,12 @@ const config  = require('./config')
 const ENV = process.env.NODE_ENV
 const resolveEntryFile = require('./utils').resolveEntryFile
 const resolveHtmlFile = require('./utils').resolveHtmlFile
-const getEntrysPath = require('./utils').getEntrysPath
 
-const jsEntrys = resolveEntryFile('js')
+const entrys = resolveEntryFile()
+console.log('entrys:', entrys)
+
 const webpackBaseConfig = {
-    entry: getEntrysPath(jsEntrys),
+    entry: entrys,
     output: {
         filename: 'js/[name].[hash].js',
         path: config.distRootPath,
@@ -18,15 +19,20 @@ const webpackBaseConfig = {
     },
     resolve: {
         alias: {
-            '@': config.pagesRootPath
+            '@': config.srcPath
         }
     },
     module: {
         rules: [{
-            test: /\.js$/,
+            test: /\.tsx?$/,
             exclude: /\/node_modules/,
             use: {
                 loader: 'babel-loader'
+            }
+        }, {
+            test: /\.vue$/,
+            use: {
+                loader: 'vue-loader'
             }
         }, {
             test: /\.scss$/,
@@ -68,22 +74,20 @@ const webpackBaseConfig = {
     ]
 }
 
-const htmlEntry = resolveHtmlFile('html')
+const htmlEntry = resolveHtmlFile()
 
-for(let i in htmlEntry) {
+for(let name in htmlEntry) {
     webpackBaseConfig.plugins.push(
         new htmlWebpackPlugin({
-            template: htmlEntry[i].path,
-            filename: path.resolve(config.distRootPath, `${htmlEntry[i].dir}.html`),
+            template: htmlEntry[name],
+            filename: path.resolve(config.distRootPath, `${name}.html`),
             inject: 'body',
-            chunks: ['commons', htmlEntry[i].dir],
+            chunks: ['commons', name],
         })
     )
 }
 
-const styleEntryList = resolveEntryFile('scss')
-
-for(let i in styleEntryList) {
+for(let i in entrys) {
     webpackBaseConfig.plugins.push(
         new miniCssExtractPlugin({
             filename: 'css/[name].[hash].css'

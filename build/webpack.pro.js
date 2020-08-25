@@ -15,13 +15,7 @@ const webpackProductionConfig = merge(webpackBaseConfig, {
                 root: path.resolve(__dirname),
                 allowExternal: true
             }
-        ),
-
-        new CompressionPlugin({
-            test: /\.(css|js)$/,
-            asset: '[path].gz',
-            algorithm: 'gzip'
-        })
+        )
     ]
 })
 

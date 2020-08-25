@@ -8,19 +8,22 @@ const pageName = process.argv[2]
 const pageCnName = process.argv[3] || pageName
 const pagefilesPath = config.pagesRootPath
 
-initDirs()
 
-let pagesDir = fs.readdirSync(config.pagesRootPath)
 
-if(pagesDir.some(files => files == pageName + '.html')) {
-    console.error('文件或文件夹已经存在')
-    process.exit(0)
-}
+// let pagesDir = fs.readdirSync(config.pagesRootPath)
+
+// if(pagesDir.some(files => files == pageName)) {
+//     console.error('文件夹已经存在')
+//     process.exit(0)
+// }
+
+initDirs(pageName)
+
 
 const pageFiles = [{
-    name: `${pageName}.html`,
+    name: `index.html`,
     type: 'html',
-    path: path.join(pagefilesPath),
+    path: path.join(pagefilesPath, pageName),
     content: `<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -30,21 +33,21 @@ const pageFiles = [{
         <title>${pageCnName}</title>
     </head>
     <body>
-        <div class="${pageName}-container"></div>
+        <div class="${pageName}-container">${pageName}</div>
     </body>
 </html>`
 }, {
-    name: 'entry.js',
+    name: 'entry.ts',
     type: 'js',
-    content: `import '@/style/${pageName}/index.scss';`,
-    path: path.join(pagefilesPath, 'js', pageName)
+    content: `import './style/index.scss';`,
+    path: path.join(pagefilesPath, pageName)
 }, {
     name: 'index.scss',
     type: 'style',
     content: `.${pageName}-container {
     
 }`,
-    path: path.join(pagefilesPath, 'style', pageName)
+    path: path.join(pagefilesPath, pageName, 'style')
 }]
 
 pageFiles.forEach(value => {
@@ -57,9 +60,11 @@ pageFiles.forEach(value => {
 console.log('创建成功')
 process.exit()
 
-function initDirs() {
+
+
+function initDirs(pageName) {
     const dirs = [
-        'src', 'src/js/', 'src/style/'
+        'src', 'src/pages' ,'src/pages/' + pageName + '/script/', 'src/pages/' + pageName + '/style/'
     ]
 
     dirs.forEach(dir => {
