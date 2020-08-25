@@ -6,6 +6,7 @@ const config  = require('./config')
 const ENV = process.env.NODE_ENV
 const resolveEntryFile = require('./utils').resolveEntryFile
 const resolveHtmlFile = require('./utils').resolveHtmlFile
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 const entrys = resolveEntryFile()
 console.log('entrys:', entrys)
@@ -71,6 +72,7 @@ const webpackBaseConfig = {
     },
     plugins: [
         new ProgressBarPlugin(),
+        new VueLoaderPlugin()
     ]
 }
 
