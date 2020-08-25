@@ -39,6 +39,9 @@ const webpackBaseConfig = {
             test: /\.scss$/,
             use: [{
                 loader: miniCssExtractPlugin.loader,
+                options: {
+                    publicPath: '/'
+                }
             }, {loader: 'css-loader'}, {loader: 'sass-loader'}]
         }, {
             test: /\.html$/,
