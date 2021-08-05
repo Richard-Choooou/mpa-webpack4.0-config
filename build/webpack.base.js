@@ -68,10 +68,13 @@ const webpackBaseConfig = {
     },
     optimization: {
         splitChunks: {
-            chunks: 'all',
-            name: 'commons',
-            filename: 'js/[name].[hash].js'
+            chunks: 'all'
         }
+        // splitChunks: {
+        //     chunks: 'initial',
+        //     name: 'commons',
+        //     filename: 'js/[name].[hash].js'
+        // }
     },
     plugins: [
         new ProgressBarPlugin(),
@@ -87,7 +90,7 @@ for(let name in htmlEntry) {
             template: htmlEntry[name],
             filename: path.resolve(config.distRootPath, `${name}.html`),
             inject: 'body',
-            chunks: ['commons', name],
+            chunks: [name],
         })
     )
 }
